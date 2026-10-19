@@ -31,6 +31,12 @@ ball.vx = -2
 ball.vy = -2
 ball.color = `black`
 
+
+//scoreboard setup
+let score1 = 0
+let score2 = 0
+
+
 function main()
 {
     // Erases the canvas
@@ -93,40 +99,52 @@ function main()
     {
         ball.x = c.width/2
         ball.y = c.height/2
+        ball.vx = 2
+        ball.vy = 2
+        score2++
     }
     if (ball.x > c.width)
     {
         ball.x = c.width/2
         ball.y = c.height/2
+        ball.vx = -2
+        ball.vy = -2
+        score1++
     }
     if (ball.y < 0)
     {
         ball.y = 0
-        ball.vy = -ball.vy - 1
+        ball.vy = -ball.vy * 1.5
     }
     if (ball.y > c.height)
     {
         ball.y = c.height
-        ball.vy = -ball.vy - 1
+        ball.vy = -ball.vy * 1.5
     }
 
     // p1 with ball collision
     if (ball.collide(p1))
     {
-        ball.x = p1.x + p1.w/2 + ball.w/2;
-        ball.vx = -ball.vx;
+        ball.x = p1.x + p1.w/2 + ball.w/2
+        ball.vx = -ball.vx * 1.5
     }
 
     // p2 with ball collision
     if (ball.collide(p2))
     {
-        ball.x = p2.x - p2.w/2 - ball.w/2;
-        ball.vx = -ball.vx;
+        ball.x = p2.x - p2.w/2 - ball.w/2
+        ball.vx = -ball.vx * 1.5
     }
 
     // Draw the objects
     p1.draw()
     p2.draw()
     ball.draw()
+    // Draw the scoreboard
+    ctx.fillStyle = `black`
+    ctx.font = `30px Arial`
+    ctx.fillText(score1, c.width/4, 50)
+    ctx.fillText(score2, 3*c.width/4, 50)
+    ctx.fillText(`Scoreboard`, c.width/2 - 80, 50)
 }
 
