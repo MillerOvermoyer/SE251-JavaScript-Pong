@@ -8,6 +8,15 @@ let timer = setInterval(main, 1000/60)
 // Global friction variable
 let fy = .97
 
+let players = [2]
+
+
+let player1 = new Player('Player 1', 'red')
+let player2 = new Player('Player 2', 'blue')
+
+player[0] = player1
+player[1] = player2
+
 // Player 1 (p1) setup
 let p1 = new Box();
 p1.w = 20
@@ -146,5 +155,6 @@ function main()
     ctx.fillText(score1, c.width/4, 50)
     ctx.fillText(score2, 3*c.width/4, 50)
     ctx.fillText(`Scoreboard`, c.width/2 - 80, 50)
+    console.log(players)
 }
 
