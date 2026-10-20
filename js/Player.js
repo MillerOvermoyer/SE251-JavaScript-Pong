@@ -1,8 +1,8 @@
 class Player {
-    constructor(name, color) {
+    constructor(name, pad) {
         this.name = name
         this.score = 0
         this.highscore = 0
-        this.pad = new Box()
-        this.color = color
+        this.pad = pad
+    }
 }
