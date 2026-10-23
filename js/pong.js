@@ -64,6 +64,7 @@ function main()
     // Erases the canvas
     ctx.clearRect(0,0,c.width,c.height)
     
+    
     // p1 accelerates when key is pressed 
     if(keys[`w`])
     {
@@ -85,37 +86,25 @@ function main()
         pads[1].vy += pads[1].force
     }
 
-    // Applies friction
-    pads[0].vy *= fy
-    pads[1].vy *= fy
-    // Player movement
-    pads[0].move();
-    pads[1].move();
+    for (let i = 0; i < pads.length; i++){
+        pads[i].vy *= fy
+        
+        pads[i].move()
+        // pads collision with top and bottom of canvas
+        if (pads[i].y > c.height-pads[i].h/2)
+        {
+            pads[i].y = c.height-pads[i].h/2
+        }
+        if (pads[i].y < 0+pads[i].h/2)
+        {
+            pads[i].y = 0+pads[i].h/2
+        }
+    }
 
     // Ball movement
     ball.move()
 
-    // pads[0] collision
-    if (pads[0].y < 0+pads[0].h/2)
-    {
-        pads[0].y = 0+pads[0].h/2
-    }
-    if (pads[0].y > c.height-pads[0].h/2)
-    {
-        pads[0].y = c.height-pads[0].h/2
-    }
-
-    // pads[1] collision
-    if (pads[1].y < 0+pads[1].h/2)
-    {
-        pads[1].y = 0+pads[1].h/2
-    }
-    if (pads[1].y > c.height-pads[1].h/2)
-    {
-        pads[1].y = c.height-pads[1].h/2
-    }
-
-
+    
     // Ball collision 
     if (ball.x < 0)
     {
@@ -144,19 +133,15 @@ function main()
         ball.vy = -ball.vy * 1.5
     }
 
-    // pads[0] with ball collision
-    if (ball.collide(pads[0]))
-    {
-        ball.x = pads[0].x + pads[0].w/2 + ball.w/2
-        ball.vx = -ball.vx * 1.5
-    }
+    for (let i = 0; i < pads.length; i++){
+        if (ball.collide(pads[i]))
+        {
+            ball.vx = -ball.vx * 1.5
+            ball.vy = -ball.vy * 1.5
+        }
 
-    // pads[1] with ball collision
-    if (ball.collide(pads[1]))
-    {
-        ball.x = pads[1].x - pads[1].w/2 - ball.w/2
-        ball.vx = -ball.vx * 1.5
     }
+    
 
     for (let i = 0; i < players.length; i++)
     {
@@ -165,21 +150,22 @@ function main()
             players[i].highscore = players[i].score
         }
     }
-    for (let i = 0; i < players.length; i++)
-    {
-        scoreboardScores[i].innerHTML = players[i].name + `: ` + players[i].score;
-    }
+    // for (let i = 0; i < players.length; i++)
+    // {
+    //     scoreboardScores[i].innerHTML = players[i].name + `: ` + players[i].score;
+    // }
 
     // Draw the objects
-    pads[0].draw()
-    pads[1].draw()
+    for (let i = 0; i < pads.length; i++){
+        pads[i].draw()
+    }
     ball.draw()
     // Draw the scoreboard
-    // ctx.fillStyle = `black`
-    // ctx.font = `30px Arial`
-    // ctx.fillText(players[0].score, c.width/4, 50)
-    // ctx.fillText(players[1].score, 3*c.width/4, 50)
-    // ctx.fillText(`Scoreboard`, c.width/2 - 80, 50)
+    ctx.fillStyle = `black`
+    ctx.font = `30px Arial`
+    ctx.fillText(players[0].score, c.width/4, 50)
+    ctx.fillText(players[1].score, 3*c.width/4, 50)
+    ctx.fillText(`Scoreboard`, c.width/2 - 80, 50)
     console.log(players)
     console.log(pads)
     console.log(players[0].score + " | " + players[1].score)
