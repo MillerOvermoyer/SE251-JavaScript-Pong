@@ -12,6 +12,8 @@ let players = []
 let paddle1 = new Box()
 let paddle2 = new Box()
 
+scoreboardScores = document.querySelectorAll(`#Score div`)
+
 paddle1.w = 20
 paddle1.h = 150
 paddle1.x = paddle1.w/2
@@ -163,17 +165,23 @@ function main()
             players[i].highscore = players[i].score
         }
     }
+    for (let i = 0; i < players.length; i++)
+    {
+        scoreboardScores[i].innerHTML = players[i].name + `: ` + players[i].score;
+    }
+
     // Draw the objects
     pads[0].draw()
     pads[1].draw()
     ball.draw()
     // Draw the scoreboard
-    ctx.fillStyle = `black`
-    ctx.font = `30px Arial`
-    ctx.fillText(players[0].score, c.width/4, 50)
-    ctx.fillText(players[1].score, 3*c.width/4, 50)
-    ctx.fillText(`Scoreboard`, c.width/2 - 80, 50)
+    // ctx.fillStyle = `black`
+    // ctx.font = `30px Arial`
+    // ctx.fillText(players[0].score, c.width/4, 50)
+    // ctx.fillText(players[1].score, 3*c.width/4, 50)
+    // ctx.fillText(`Scoreboard`, c.width/2 - 80, 50)
     console.log(players)
     console.log(pads)
+    console.log(players[0].score + " | " + players[1].score)
 }
 
